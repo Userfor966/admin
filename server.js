@@ -9,7 +9,10 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:3000', 
+  origin: [
+    'http://localhost:3000',
+    "https://jobly-roan.vercel.app/"
+  ], 
   methods: ['GET', 'POST','PATCH','PUT','DELETE'],
   credentials: true,  
 }));
