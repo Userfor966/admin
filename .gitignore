@@ -1,0 +1,44 @@
+# dependencies
+/node_modules
+/pnpm-lock.yaml
+/package-lock.json
+/yarn.lock
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+.pnpm-debug.log*
+logs
+*.log
+*.log.*
+
+# dotenv environment variables
+.env
+.env.local
+.env.*.local
+
+# build & output directories
+/build
+/dist
+/out
+
+# testing
+/coverage
+
+# system files
+.DS_Store
+Thumbs.db
+
+# database (if using SQLite or other file-based DB)
+/data/*.db
+/data/*.sqlite
+/data/*.sqlite3
+/data/*.log
+
+# IDE/editor config files
+.vscode/
+.idea/
+*.swp
+
+# Vercel & deployment
+.vercel
