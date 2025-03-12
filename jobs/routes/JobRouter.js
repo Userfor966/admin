@@ -79,7 +79,7 @@ router.post("/send-job-otp", async (req, res) => {
 // İş ilanı ekleme ve OTP doğrulama
 router.post("/addjob", async (req, res) => {
   try {
-    const { title, salary,category, description,gender, city, email,phone, otp } = req.body;
+    const { title, salary,category, description, city, email,phone, otp } = req.body;
 
     if (!email || !otp) return res.status(400).json({ message: "E-posta ve OTP gerekli." });
 
@@ -99,7 +99,6 @@ router.post("/addjob", async (req, res) => {
       phone,
       description,
       city,
-      gender
     });
 
     await newJob.save();

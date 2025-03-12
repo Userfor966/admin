@@ -8,7 +8,6 @@ const jobSchema = new mongoose.Schema({
   description: { type: String },
   phone:{type:Number},
   email:{type:String},
-  gender:{type:String},
   viewCount: { type: Number, default: 0 },
 
 });
