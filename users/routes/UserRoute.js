@@ -195,10 +195,10 @@ router.post("/login", async (req, res) => {
       secure: true,
       sameSite: "None",
       path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      domain: ".jobly-roan.vercel.app",
     });
 
-    res.status(200).json({ message: "Login successful", token, userType: "user" });
+    res.status(200).json({ message: "Login successful"});
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).json({ message: "Server error", error: error.message });
