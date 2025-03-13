@@ -195,7 +195,6 @@ router.post("/login", async (req, res) => {
       secure: true,
       sameSite: "None",
       path: "/",
-      domain: ".jobly-roan.vercel.app",
     });
 
     res.status(200).json({ message: "Login successful"});
