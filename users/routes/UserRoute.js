@@ -195,7 +195,6 @@ router.post("/login", async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "None",
       path: "/",
-      domain: "admin-9i92.onrender.com",
     });
 
     res.status(200).json({ message: "Login successful"});

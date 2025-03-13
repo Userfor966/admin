@@ -12,7 +12,6 @@ app.use(cors({
   origin:'https://jobly-roan.vercel.app',
   methods: ['GET', 'POST','PATCH','PUT','DELETE'],
   credentials: true,  
-  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 app.use(cookieParser())
 
