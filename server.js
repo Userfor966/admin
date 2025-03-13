@@ -8,13 +8,15 @@ const PORT = process.env.PORT || 3001;
 
 
 app.use(express.json());
+app.options('*', cors()); 
 app.use(cors({
   origin:'https://jobly-roan.vercel.app',
   methods: ['GET', 'POST','PATCH','PUT','DELETE'],
   credentials: true,  
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 app.use(cookieParser())
-app.options('*', cors()); 
+
 
 
 
