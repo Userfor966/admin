@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(cors({
-  origin:'https://jobly-roan.vercel.app',
+  origin:'http://localhost:3000',
   methods: ['GET', 'POST','PATCH','PUT','DELETE'],
   credentials: true,  
 }));
@@ -28,12 +28,10 @@ mongoose
 const ProfileRoute=require('./users/routes/ProfileRoute')
 const UserRoute=require('./users/routes/UserRoute')
 const GetUsers=require("./users/routes/GetUsers")
-const AddJob=require("./jobs/routes/JobRouter")
 const AddCategory=require("./category/CategoryRoute")
 
 app.use('/',UserRoute)
 app.use("/",GetUsers)
-app.use("/",AddJob)
 app.use("/",AddCategory)
 app.use("/",ProfileRoute)
 

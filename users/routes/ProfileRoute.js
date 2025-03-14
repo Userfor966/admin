@@ -74,18 +74,18 @@ router.patch("/updateinfo",authMiddleware, upload.single("image"), async (req, r
 });
 
 router.patch("/personal-information",authMiddleware, async (req, res) => {
-  const { birthDate,militaryStatus,driverLicence, maritalStatus,gender  } = req.body;
+  const { age,militaryStatus,driverLicence,educationLevel, maritalStatus,gender  } = req.body;
   const id = req.user.id;
-  if (req.user.type !== "jobseeker") {
-    return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-  }
   try {
     const updateFields = {};
 
-    if (birthDate && birthDate.trim() !== "") updateFields.birthDate = birthDate;
+    if (age !== null && age !== undefined && !isNaN(age)) {
+      updateFields.age = age;
+    }
     if (militaryStatus && militaryStatus.trim() !== "") updateFields.militaryStatus = militaryStatus;
     if (driverLicence && driverLicence.trim() !== "") updateFields.driverLicence = driverLicence;
     if (maritalStatus && maritalStatus.trim() !== "") updateFields.maritalStatus = maritalStatus;
+    if (educationLevel && educationLevel.trim() !== "") updateFields.educationLevel = educationLevel;
     if (gender && gender.trim() !== "") updateFields.gender = gender;
    
 
@@ -115,9 +115,6 @@ router.patch("/personal-information",authMiddleware, async (req, res) => {
 
 router.post("/add-education", authMiddleware, async (req, res) => {
   const { schoolName, degree, specialty, startYear, endYear } = req.body;
-  if (req.user.type !== "jobseeker") {
-    return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-  }
   // Kullanıcıdan gelen eğitim bilgilerini kontrol et
   if (!schoolName || !degree || !specialty || !startYear || !endYear) {
     return res.status(400).json({ message: "Bütün məlumatları daxil edin!" });
@@ -165,9 +162,6 @@ router.delete("/remove-education/:id", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;  // Kullanıcı kimliği
     const educationId = req.params.id; // Silinecek eğitim ID'si
-    if (req.user.type !== "jobseeker") {
-      return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-    }
     // Kullanıcının education array'inden ilgili eğitimi kaldır
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -189,9 +183,7 @@ router.delete("/remove-education/:id", authMiddleware, async (req, res) => {
 
 router.post("/add-experience", authMiddleware, async (req, res) => {
   const { company, position, startYear, endYear } = req.body;
-  if (req.user.type !== "jobseeker") {
-    return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-  }
+
   // Məlumatların tam olub-olmadığını yoxla
   if (!company || !position || !startYear) {
     return res.status(400).json({ message: "Bütün məlumatları daxil edin!" });
@@ -239,9 +231,7 @@ router.delete("/remove-experience/:id", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;  // Kullanıcı kimliği
     const experienceId = req.params.id; // Silinecek eğitim ID'si
-    if (req.user.type !== "jobseeker") {
-      return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-    }
+  
     // Kullanıcının education array'inden ilgili eğitimi kaldır
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -262,9 +252,7 @@ router.delete("/remove-experience/:id", authMiddleware, async (req, res) => {
 
 router.post("/add-language", authMiddleware, async (req, res) => {
   const { name,level } = req.body;
-  if (req.user.type !== "jobseeker") {
-    return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-  }
+
   // Kullanıcıdan gelen eğitim bilgilerini kontrol et
   if (!name || !level) {
     return res.status(400).json({ message: "Bütün məlumatları daxil edin!" });
@@ -310,9 +298,7 @@ router.delete("/remove-language/:id", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;  // Kullanıcı kimliği
     const languageId = req.params.id; // Silinecek eğitim ID'si
-    if (req.user.type !== "jobseeker") {
-      return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-    }
+   
     // Kullanıcının education array'inden ilgili eğitimi kaldır
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -336,9 +322,6 @@ router.post("/add-skill",authMiddleware, async (req, res) => {
     const userId = req.user.id; // Kimlik doğrulamadan gelen userId
     const { skills } = req.body; // Frontend'den gelen skill listesi
 
-    if (req.user.type !== "jobseeker") {
-      return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-    }
     if (!Array.isArray(skills) || skills.length === 0) {
       return res.status(400).json({ error: "Ən az bir bacarıq daxil edin" });
     }
@@ -369,9 +352,7 @@ router.delete("/remove-skill", authMiddleware, async (req, res) => {
     if (!skill || typeof skill !== "string") {
       return res.status(400).json({ error: "Xəta" });
     }
-    if (req.user.type !== "jobseeker") {
-      return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-    }
+   
 
     // Kullanıcının belirtilen skill'ini kaldır
     const updatedUser = await User.findByIdAndUpdate(
@@ -404,9 +385,7 @@ router.post("/add-socialmedia", authMiddleware, async (req, res) => {
     const userId = req.user.id;
 
     // Kullanıcı tipi "jobseeker" değilse hata ver
-    if (req.user.type !== "jobseeker") {
-      return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-    }
+
 
     // Yeni sosyal medya bilgisini ekle
     const newSocialLink = { name, url };
@@ -444,9 +423,6 @@ router.delete("/remove-account/:id", authMiddleware, async (req, res) => {
     const socialMediaId = req.params.id; // Silinecek sosyal medya hesabının ID'si
 
     // Eğer kullanıcı "jobseeker" değilse hata döndür
-    if (userType !== "jobseeker") {
-      return res.status(403).json({ message: "Bu əməliyyatı yalnız iş axtaranlar edə bilər!" });
-    }
 
     // Kullanıcının socialLinks array'inden ilgili sosyal medya hesabını kaldır
     const updatedUser = await User.findByIdAndUpdate(

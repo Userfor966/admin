@@ -37,11 +37,12 @@ const userSchema = new mongoose.Schema({
   ],
   skills: [{ type: String }] ,
   isOpen:{type:Boolean},
-  birthDate:{type:String},
+  age:{type:Number},
   militaryStatus:{type:String},
   driverLicence:{type:String},
   maritalStatus:{type:String},
   gender:{type:String},
+  educationLevel:{type:String},
   socialLinks:[{
     name:{type:String},
     url:{type:String},
